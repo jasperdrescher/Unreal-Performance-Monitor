@@ -1,8 +1,9 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
+// Copyright (c) 2026 Jasper Drescher. All rights reserved.
 
 #pragma once
 
 #include "Kismet/BlueprintFunctionLibrary.h"
+
 #include "UnrealPerformanceMonitorBPLibrary.generated.h"
 
 /* 

@@ -1,4 +1,4 @@
-// Some copyright should be here...
+// Copyright (c) 2026 Jasper Drescher. All rights reserved.
 
 using UnrealBuildTool;
 
@@ -38,7 +38,8 @@ public class UnrealPerformanceMonitor : ModuleRules
 				"Engine",
 				"Slate",
 				"SlateCore",
-				// ... add private dependencies that you statically link with here ...	
+				"UMG",
+				"RHI"
 			}
 			);
 		

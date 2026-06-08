@@ -1,6 +1,7 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
+// Copyright (c) 2026 Jasper Drescher. All rights reserved.
 
 #include "UnrealPerformanceMonitorBPLibrary.h"
+
 #include "UnrealPerformanceMonitor.h"
 
 UUnrealPerformanceMonitorBPLibrary::UUnrealPerformanceMonitorBPLibrary(const FObjectInitializer& ObjectInitializer)
