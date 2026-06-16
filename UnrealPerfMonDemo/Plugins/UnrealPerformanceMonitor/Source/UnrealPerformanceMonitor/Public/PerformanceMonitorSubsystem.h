@@ -14,6 +14,7 @@ class UNREALPERFORMANCEMONITOR_API UPerformanceMonitorSubsystem : public UTickab
 	
 public:
     virtual void Initialize(FSubsystemCollectionBase& Collection) override;
+	virtual void Deinitialize() override;
 	virtual void Tick(float DeltaTime) override;
 
     virtual bool IsTickable() const override { return true; }
@@ -21,15 +22,15 @@ public:
     virtual TStatId GetStatId() const override;
 
 private:
-	void CalculateAverageFPS(float DeltaTime);
+	void CalculateAverageFps(float DeltaTime);
 	void CalculateAverageDeltaTime();
 
 	TArray<float> DeltaTimeHistory;
 	FString FramesPerSecond;
-	FString FrameTime;
-	FString PhysicalMB;
-	FString VirtualMB;
-	FString GPUName;
+	FString FrameTimeMs;
+	FString PhysicalMb;
+	FString VirtualMb;
+	FString GpuName;
 	float TotalDeltaTime = 0.0f;
 	float AverageFPS = 0.0f;
 	float SmoothedDeltaTime = 0.0f;
@@ -41,4 +42,5 @@ private:
 	int32 FramesPerSecondUniqueKey = -1;
 	int32 PhysicalMbUniqueKey = -1;
 	int32 VirtualMbUniqueKey = -1;
+	int32 GpuNameUniqueKey = -1;
 };
