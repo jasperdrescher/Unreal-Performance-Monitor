@@ -20,6 +20,13 @@ public:
     virtual bool IsTickable() const override { return true; }
 
     virtual TStatId GetStatId() const override;
+	FString GetFramesPerSecond() const { return FramesPerSecond; }
+	FString GetFrameTimeMs() const { return FrameTimeMs; }
+	FString GetPhysicalMb() const { return PhysicalMb; }
+	FString GetVirtualMb() const { return VirtualMb; }
+	FString GetGpuName() const { return GpuName; }
+	float GetAverageFps() const { return AverageFps; }
+	float GetSmoothedDeltaTime() const { return SmoothedDeltaTime; }
 
 private:
 	void CalculateAverageFps(float DeltaTime);

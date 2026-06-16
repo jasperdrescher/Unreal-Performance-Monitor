@@ -23,8 +23,8 @@ void UPerformanceMonitorSubsystem::Initialize(FSubsystemCollectionBase& Collecti
     const FGPUDriverInfo GPUDriverInfo = FPlatformMisc::GetGPUDriverInfo(GRHIAdapterName);
     GpuName = GPUDriverInfo.DeviceDescription;
 
-    FrametimeMsUniqueKey = GetTypeHash(FString("FrametimeMs"));
     FramesPerSecondUniqueKey = GetTypeHash(FString("FramesPerSecond"));
+    FrametimeMsUniqueKey = GetTypeHash(FString("FrametimeMs"));
     PhysicalMbUniqueKey = GetTypeHash(FString("PhysicalMb"));
     VirtualMbUniqueKey = GetTypeHash(FString("VirtualMb"));
     GpuNameUniqueKey = GetTypeHash(FString("GpuName"));
@@ -49,21 +49,21 @@ void UPerformanceMonitorSubsystem::Tick(float DeltaTime)
     CalculateAverageFps(DeltaTime);
     CalculateAverageDeltaTime();
 
+    FrameTimeMs = FString::Printf(TEXT("Frametime %.1f (%.1f) ms"), SmoothedDeltaTime * 1000.f, DeltaTime * 1000.f);
+
+    FramesPerSecond = FString::Printf(TEXT("FPS %.0f (%.0f)"), AverageFps, 1.0f / DeltaTime);
+
+    const FPlatformMemoryStats MemoryStats = FPlatformMemory::GetStats();
+    PhysicalMb = FString::Printf(TEXT("Physical %s / %s"), *FGenericPlatformMemory::PrettyMemory(MemoryStats.UsedPhysical), *FGenericPlatformMemory::PrettyMemory(MemoryStats.AvailablePhysical));
+    VirtualMb = FString::Printf(TEXT("Virtual %s / %s"), *FGenericPlatformMemory::PrettyMemory(MemoryStats.UsedVirtual), *FGenericPlatformMemory::PrettyMemory(MemoryStats.AvailableVirtual));
+
     if (CVarShowPerfStats.GetValueOnGameThread() == 1 && GEngine)
     {
-        FrameTimeMs = FString::Printf(TEXT("Frametime %.1f (%.1f) ms"), SmoothedDeltaTime * 1000.f, DeltaTime * 1000.f);
-
-        FramesPerSecond = FString::Printf(TEXT("FPS %.0f (%.0f)"), AverageFps, 1.0f / DeltaTime);
-
-        const FPlatformMemoryStats MemoryStats = FPlatformMemory::GetStats();
-        PhysicalMb = FString::Printf(TEXT("Physical %s / %s"), *FGenericPlatformMemory::PrettyMemory(MemoryStats.UsedPhysical), *FGenericPlatformMemory::PrettyMemory(MemoryStats.AvailablePhysical));
-        VirtualMb = FString::Printf(TEXT("Virtual %s / %s"), *FGenericPlatformMemory::PrettyMemory(MemoryStats.UsedVirtual), *FGenericPlatformMemory::PrettyMemory(MemoryStats.AvailableVirtual));
-
-        GEngine->AddOnScreenDebugMessage(FramesPerSecondUniqueKey, 0.0f, FColor::Green, FramesPerSecond);
-        GEngine->AddOnScreenDebugMessage(FrametimeMsUniqueKey, 0.0f, FColor::Green, FrameTimeMs);
-        GEngine->AddOnScreenDebugMessage(PhysicalMbUniqueKey, 0.0f, FColor::Green, PhysicalMb);
-        GEngine->AddOnScreenDebugMessage(VirtualMbUniqueKey, 0.0f, FColor::Green, VirtualMb);
         GEngine->AddOnScreenDebugMessage(GpuNameUniqueKey, 0.0f, FColor::Green, GpuName);
+        GEngine->AddOnScreenDebugMessage(VirtualMbUniqueKey, 0.0f, FColor::Green, VirtualMb);
+        GEngine->AddOnScreenDebugMessage(PhysicalMbUniqueKey, 0.0f, FColor::Green, PhysicalMb);
+        GEngine->AddOnScreenDebugMessage(FrametimeMsUniqueKey, 0.0f, FColor::Green, FrameTimeMs);
+        GEngine->AddOnScreenDebugMessage(FramesPerSecondUniqueKey, 0.0f, FColor::Green, FramesPerSecond);
     }
 }
 
