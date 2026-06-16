@@ -2,6 +2,8 @@
 A lightweight, no-nonsense performance monitoring plugin for Unreal Engine 5. 
 It provides a quick, real-time overview of your game's vital performance metrics without cluttering your screen.
 
+<img src="UnrealPerfMonDemo/Plugins/UnrealPerformanceMonitor/Resources/Icon128.png">
+
 ## Features
 
 * **Lightweight & Fast:** Minimal CPU/GPU overhead.
