@@ -37,4 +37,8 @@ private:
 	float AccumulatedTimeThreshold = 5.0f;
 	int32 MaxDeltaTimeSamples = 30;
 	int32 FrameCount = 0;
+	int32 FrametimeMsUniqueKey = -1;
+	int32 FramesPerSecondUniqueKey = -1;
+	int32 PhysicalMbUniqueKey = -1;
+	int32 VirtualMbUniqueKey = -1;
 };

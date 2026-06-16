@@ -22,6 +22,11 @@ void UPerformanceMonitorSubsystem::Initialize(FSubsystemCollectionBase& Collecti
 
     const FGPUDriverInfo GPUDriverInfo = FPlatformMisc::GetGPUDriverInfo(GRHIAdapterName);
     GPUName = GPUDriverInfo.DeviceDescription;
+
+    FrametimeMsUniqueKey = GetTypeHash("FrametimeMs");
+    FramesPerSecondUniqueKey = GetTypeHash("FramesPerSecond");
+    PhysicalMbUniqueKey = GetTypeHash("PhysicalMb");
+    VirtualMbUniqueKey = GetTypeHash("VirtualMb");
 }
 
 void UPerformanceMonitorSubsystem::Tick(float DeltaTime)
@@ -45,10 +50,10 @@ void UPerformanceMonitorSubsystem::Tick(float DeltaTime)
 
     if (CVarShowPerfStats.GetValueOnGameThread() == 1 && GEngine)
     {
-        float CurrentFPS = 1.0f / DeltaTime;
-        FString StatText = FString::Printf(TEXT("FPS Counter: %.2f"), CurrentFPS);
-
-        GEngine->AddOnScreenDebugMessage(5, 0.0f, FColor::Cyan, StatText);
+        GEngine->AddOnScreenDebugMessage(FrametimeMsUniqueKey, 0.0f, FColor::Green, FrameTime);
+        GEngine->AddOnScreenDebugMessage(FramesPerSecondUniqueKey, 0.0f, FColor::Green, PhysicalMB);
+        GEngine->AddOnScreenDebugMessage(PhysicalMbUniqueKey, 0.0f, FColor::Green, FramesPerSecond);
+        GEngine->AddOnScreenDebugMessage(VirtualMbUniqueKey, 0.0f, FColor::Green, VirtualMB);
     }
 }
 
