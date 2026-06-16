@@ -1,6 +1,11 @@
 # Auto detect text files and perform LF normalization
 * text=auto
 
+# Assets
+*.psd filter=lfs diff=lfs merge=lfs -text
+*.png filter=lfs diff=lfs merge=lfs -text
+*.jpg filter=lfs diff=lfs merge=lfs -text
+
 # Unreal Engine file types
 *.uasset filter=lfs diff=lfs merge=lfs -text
 *.umap filter=lfs diff=lfs merge=lfs -text
@@ -16,4 +21,3 @@
 Projects/**/Content/** filter=lfs diff=lfs merge=lfs binary 
 Projects/**/DerivedDataCache/** filter=lfs diff=lfs merge=lfs binary
 Projects/**/Binaries/** filter=lfs diff=lfs merge=lfs binary
-
