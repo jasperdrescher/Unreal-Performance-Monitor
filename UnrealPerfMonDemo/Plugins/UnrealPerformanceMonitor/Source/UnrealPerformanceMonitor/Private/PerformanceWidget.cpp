@@ -14,7 +14,14 @@ void UPerformanceWidget::NativeConstruct()
 	DeltaTimeHistory.Reserve(MaxDeltaTimeSamples + 1);
 
 	const FGPUDriverInfo GPUDriverInfo = FPlatformMisc::GetGPUDriverInfo(GRHIAdapterName);
-	GPUName = GPUDriverInfo.DeviceDescription;
+	GpuName = GPUDriverInfo.DeviceDescription;
+}
+
+void UPerformanceWidget::NativeDestruct()
+{
+	Super::NativeDestruct();
+
+	DeltaTimeHistory.Empty();
 }
 
 void UPerformanceWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
@@ -26,23 +33,27 @@ void UPerformanceWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTi
 	if (DeltaTimeHistory.Num() > MaxDeltaTimeSamples)
 		DeltaTimeHistory.RemoveAt(0);
 
-	CalculateAverageDeltaTime();
-	FrameTime = FString::Printf(TEXT("Frametime %.1f (%.1f) ms"), SmoothedDeltaTime * 1000.f, InDeltaTime * 1000.f);
+	CalculateAverageFps(InDeltaTime);
 
-	CalculateAverageFPS(InDeltaTime);
-	FramesPerSecond = FString::Printf(TEXT("FPS %.0f (%.0f)"), AverageFPS, 1.0f / InDeltaTime);
+	if (!IsVisible() || !IsInViewport())
+		return;
+
+	CalculateAverageDeltaTime();
+	FrameTimeMs = FString::Printf(TEXT("Frametime %.1f (%.1f) ms"), SmoothedDeltaTime * 1000.f, InDeltaTime * 1000.f);
+
+	FramesPerSecond = FString::Printf(TEXT("FPS %.0f (%.0f)"), AverageFps, 1.0f / InDeltaTime);
 
 	const FPlatformMemoryStats MemoryStats = FPlatformMemory::GetStats();
-	PhysicalMB = FString::Printf(TEXT("Physical %s / %s"), *FGenericPlatformMemory::PrettyMemory(MemoryStats.UsedPhysical), *FGenericPlatformMemory::PrettyMemory(MemoryStats.AvailablePhysical));
-	VirtualMB = FString::Printf(TEXT("Virtual %s / %s"), *FGenericPlatformMemory::PrettyMemory(MemoryStats.UsedVirtual), *FGenericPlatformMemory::PrettyMemory(MemoryStats.AvailableVirtual));
+	PhysicalMb = FString::Printf(TEXT("Physical %s / %s"), *FGenericPlatformMemory::PrettyMemory(MemoryStats.UsedPhysical), *FGenericPlatformMemory::PrettyMemory(MemoryStats.AvailablePhysical));
+	VirtualMb = FString::Printf(TEXT("Virtual %s / %s"), *FGenericPlatformMemory::PrettyMemory(MemoryStats.UsedVirtual), *FGenericPlatformMemory::PrettyMemory(MemoryStats.AvailableVirtual));
 }
 
-void UPerformanceWidget::CalculateAverageFPS(float InDeltaTime)
+void UPerformanceWidget::CalculateAverageFps(float InDeltaTime)
 {
 	TotalDeltaTime += InDeltaTime;
 	FrameCount++;
 
-	AverageFPS = FrameCount / TotalDeltaTime;
+	AverageFps = FrameCount / TotalDeltaTime;
 
 	AccumulatedTime += InDeltaTime;
 	if (AccumulatedTime >= AccumulatedTimeThreshold)

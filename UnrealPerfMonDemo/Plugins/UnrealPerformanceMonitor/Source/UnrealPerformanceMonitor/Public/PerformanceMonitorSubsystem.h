@@ -32,7 +32,7 @@ private:
 	FString VirtualMb;
 	FString GpuName;
 	float TotalDeltaTime = 0.0f;
-	float AverageFPS = 0.0f;
+	float AverageFps = 0.0f;
 	float SmoothedDeltaTime = 0.0f;
 	float AccumulatedTime = 0.0f;
 	float AccumulatedTimeThreshold = 5.0f;
