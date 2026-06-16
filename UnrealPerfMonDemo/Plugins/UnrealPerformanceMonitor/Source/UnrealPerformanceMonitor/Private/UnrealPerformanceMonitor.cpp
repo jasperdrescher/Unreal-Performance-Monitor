@@ -2,19 +2,18 @@
 
 #include "UnrealPerformanceMonitor.h"
 
+DEFINE_LOG_CATEGORY(UnrealPerformanceMonitor);
+
 #define LOCTEXT_NAMESPACE "FUnrealPerformanceMonitorModule"
 
 void FUnrealPerformanceMonitorModule::StartupModule()
 {
-	// This code will execute after your module is loaded into memory; the exact timing is specified in the .uplugin file per-module
-	
+	UE_LOG(UnrealPerformanceMonitor, Log, TEXT("UnrealPerformanceMonitor has started"));
 }
 
 void FUnrealPerformanceMonitorModule::ShutdownModule()
 {
-	// This function may be called during shutdown to clean up your module.  For modules that support dynamic reloading,
-	// we call this function before unloading the module.
-	
+	UE_LOG(UnrealPerformanceMonitor, Log, TEXT("UnrealPerformanceMonitor has shutdown"));
 }
 
 #undef LOCTEXT_NAMESPACE
