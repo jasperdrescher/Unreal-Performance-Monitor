@@ -18,7 +18,8 @@
 		{
 			"Name": "UnrealPerformanceMonitor",
 			"Type": "Runtime",
-			"LoadingPhase": "PreLoadingScreen"
+			"LoadingPhase": "PreLoadingScreen",
+			"PlatformAllowList": [ "Win64", "Linux" ]
 		}
 	]
 }
