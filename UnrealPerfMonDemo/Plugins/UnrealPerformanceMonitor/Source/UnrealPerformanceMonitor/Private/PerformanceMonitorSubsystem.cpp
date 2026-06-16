@@ -2,12 +2,14 @@
 
 #include "PerformanceMonitorSubsystem.h"
 
+#include "Engine/Engine.h"
 #include "GenericPlatform/GenericPlatformDriver.h"
 #include "GenericPlatform/GenericPlatformMemory.h"
 #include "GenericPlatform/GenericPlatformMisc.h"
+#include "HAL/IConsoleManager.h"
 #include "RHIGlobals.h"
 
-static TAutoConsoleVariable<int32> CVarShowPerfStats(
+static TAutoConsoleVariable<int32> CVarShowStats(
     TEXT("PerformanceMonitor.ShowStats"),
     0,
     TEXT("Toggles performance stats.\n0: Off\n1: On"),
@@ -57,7 +59,7 @@ void UPerformanceMonitorSubsystem::Tick(float DeltaTime)
     PhysicalMb = FString::Printf(TEXT("Physical %s / %s"), *FGenericPlatformMemory::PrettyMemory(MemoryStats.UsedPhysical), *FGenericPlatformMemory::PrettyMemory(MemoryStats.AvailablePhysical));
     VirtualMb = FString::Printf(TEXT("Virtual %s / %s"), *FGenericPlatformMemory::PrettyMemory(MemoryStats.UsedVirtual), *FGenericPlatformMemory::PrettyMemory(MemoryStats.AvailableVirtual));
 
-    if (CVarShowPerfStats.GetValueOnGameThread() == 1 && GEngine)
+    if (CVarShowStats.GetValueOnGameThread() == 1 && GEngine)
     {
         GEngine->AddOnScreenDebugMessage(GpuNameUniqueKey, 0.0f, FColor::Green, GpuName);
         GEngine->AddOnScreenDebugMessage(VirtualMbUniqueKey, 0.0f, FColor::Green, VirtualMb);

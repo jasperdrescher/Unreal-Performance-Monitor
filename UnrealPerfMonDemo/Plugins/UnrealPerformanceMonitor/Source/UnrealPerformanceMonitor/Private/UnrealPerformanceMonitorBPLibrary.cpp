@@ -2,6 +2,7 @@
 
 #include "UnrealPerformanceMonitorBPLibrary.h"
 
+#include "Engine/Engine.h"
 #include "Engine/World.h"
 #include "PerformanceMonitorSubsystem.h"
 #include "UnrealPerformanceMonitor.h"
