@@ -42,4 +42,4 @@ For custom UI layouts or shipping builds where the console is disabled:
 1. Download or clone this repository.
 2. Copy the `UnrealPerformanceMonitor` folder into your project's `Plugins` directory (create one in your project root if it doesn't exist).
 3. Restart Unreal Engine 5.
-4. Go to **Edit > Plugins** and ensure **Fast Performance Monitor** is enabled.
+4. Go to **Edit > Plugins** and ensure **Unreal Performance Monitor** is enabled.
