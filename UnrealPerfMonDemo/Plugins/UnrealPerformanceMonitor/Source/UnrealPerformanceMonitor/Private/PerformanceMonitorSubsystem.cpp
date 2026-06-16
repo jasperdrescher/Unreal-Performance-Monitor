@@ -8,7 +8,7 @@
 #include "RHIGlobals.h"
 
 static TAutoConsoleVariable<int32> CVarShowPerfStats(
-    TEXT("UrealPerfMon.ShowPerfStats"),
+    TEXT("PerformanceMonitor.ShowStats"),
     0,
     TEXT("Toggles performance stats.\n0: Off\n1: On"),
     ECVF_Cheat
