@@ -1,7 +1,7 @@
 {
 	"FileVersion": 3,
 	"Version": 1,
-	"VersionName": "0.1",
+	"VersionName": "1.0",
 	"FriendlyName": "Unreal Performance Monitor",
 	"Description": "A fast and simple performance monitor for your game.",
 	"Category": "UI",
