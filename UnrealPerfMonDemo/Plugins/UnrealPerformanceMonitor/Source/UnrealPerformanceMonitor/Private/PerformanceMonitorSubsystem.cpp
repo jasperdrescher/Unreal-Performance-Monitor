@@ -23,11 +23,11 @@ void UPerformanceMonitorSubsystem::Initialize(FSubsystemCollectionBase& Collecti
     const FGPUDriverInfo GPUDriverInfo = FPlatformMisc::GetGPUDriverInfo(GRHIAdapterName);
     GpuName = GPUDriverInfo.DeviceDescription;
 
-    FrametimeMsUniqueKey = GetTypeHash("FrametimeMs");
-    FramesPerSecondUniqueKey = GetTypeHash("FramesPerSecond");
-    PhysicalMbUniqueKey = GetTypeHash("PhysicalMb");
-    VirtualMbUniqueKey = GetTypeHash("VirtualMb");
-    GpuNameUniqueKey = GetTypeHash("GpuName");
+    FrametimeMsUniqueKey = GetTypeHash(FString("FrametimeMs"));
+    FramesPerSecondUniqueKey = GetTypeHash(FString("FramesPerSecond"));
+    PhysicalMbUniqueKey = GetTypeHash(FString("PhysicalMb"));
+    VirtualMbUniqueKey = GetTypeHash(FString("VirtualMb"));
+    GpuNameUniqueKey = GetTypeHash(FString("GpuName"));
 }
 
 void UPerformanceMonitorSubsystem::Deinitialize()
@@ -47,13 +47,13 @@ void UPerformanceMonitorSubsystem::Tick(float DeltaTime)
         DeltaTimeHistory.RemoveAt(0);
 
     CalculateAverageFps(DeltaTime);
+    CalculateAverageDeltaTime();
 
     if (CVarShowPerfStats.GetValueOnGameThread() == 1 && GEngine)
     {
-        CalculateAverageDeltaTime();
         FrameTimeMs = FString::Printf(TEXT("Frametime %.1f (%.1f) ms"), SmoothedDeltaTime * 1000.f, DeltaTime * 1000.f);
 
-        FramesPerSecond = FString::Printf(TEXT("FPS %.0f (%.0f)"), AverageFPS, 1.0f / DeltaTime);
+        FramesPerSecond = FString::Printf(TEXT("FPS %.0f (%.0f)"), AverageFps, 1.0f / DeltaTime);
 
         const FPlatformMemoryStats MemoryStats = FPlatformMemory::GetStats();
         PhysicalMb = FString::Printf(TEXT("Physical %s / %s"), *FGenericPlatformMemory::PrettyMemory(MemoryStats.UsedPhysical), *FGenericPlatformMemory::PrettyMemory(MemoryStats.AvailablePhysical));
@@ -77,7 +77,7 @@ void UPerformanceMonitorSubsystem::CalculateAverageFps(float DeltaTime)
     TotalDeltaTime += DeltaTime;
     FrameCount++;
 
-    AverageFPS = FrameCount / TotalDeltaTime;
+    AverageFps = FrameCount / TotalDeltaTime;
 
     AccumulatedTime += DeltaTime;
     if (AccumulatedTime >= AccumulatedTimeThreshold)
