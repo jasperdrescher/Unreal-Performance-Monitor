@@ -1,3 +1,6 @@
+# VS2026
+*.slnx
+
 # Visual Studio 2015 user specific files
 .vs/
 .vscode/
